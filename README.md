@@ -33,3 +33,12 @@ To create a reliable and user-friendly clothing rental platform that makes fashi
 - Initial inventory is limited  
 - The system is developed within academic timelines  
 - Online payments may be simulated or basic in initial versions  
+
+## 🛠 Tech Stack
+- Frontend: HTML, CSS, JavaScript (React)
+- Backend: Node.js with Express.js
+- Database: MongoDB
+- Containerization: Docker
+- Version Control: Git & GitHub
+- Design & Prototyping: Figma
+- Architecture Diagram: Draw.io

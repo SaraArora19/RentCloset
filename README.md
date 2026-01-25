@@ -39,7 +39,7 @@ This project follows GitHub Flow.
 The main branch contains stable code.
 Feature development is done in separate feature branches which are later merged into main.
 
-## 🛠 Tech Stack
+## Tech Stack
 - Frontend: HTML, CSS, JavaScript (React)
 - Backend: Node.js with Express.js
 - Database: MongoDB

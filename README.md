@@ -34,6 +34,11 @@ To create a reliable and user-friendly clothing rental platform that makes fashi
 - The system is developed within academic timelines  
 - Online payments may be simulated or basic in initial versions  
 
+## Branching Strategy
+This project follows GitHub Flow.
+The main branch contains stable code.
+Feature development is done in separate feature branches which are later merged into main.
+
 ## 🛠 Tech Stack
 - Frontend: HTML, CSS, JavaScript (React)
 - Backend: Node.js with Express.js

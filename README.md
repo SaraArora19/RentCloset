@@ -47,3 +47,9 @@ Feature development is done in separate feature branches which are later merged 
 - Version Control: Git & GitHub
 - Design & Prototyping: Figma
 - Architecture Diagram: Draw.io
+  
+## Quick Start – Local Development
+1. Clone the repository
+2. Install Node.js
+3. Run frontend and backend locally
+4. Docker support is prepared for containerized deployment

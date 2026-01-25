@@ -53,3 +53,13 @@ Feature development is done in separate feature branches which are later merged 
 2. Install Node.js
 3. Run frontend and backend locally
 4. Docker support is prepared for containerized deployment
+
+## Local Development Tools
+- Visual Studio Code
+- Node.js
+- Git & GitHub
+- MongoDB
+- Docker Desktop
+- Figma
+- Draw.io
+

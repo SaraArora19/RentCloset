@@ -63,3 +63,10 @@ Feature development is done in separate feature branches which are later merged 
 - Figma
 - Draw.io
 
+## Software Design
+This project follows a layered client-server architecture with clear separation between presentation, business logic, and data layers. The system was designed using modular principles to ensure maintainability and scalability.
+
+## Architecture Diagram
+## UI Screen
+## Figma Link
+https://www.figma.com/design/wZmTKf1NagfiO3kcdkkbuS/LoueStyle-UI-Design?node-id=9-20&t=SKpIECbthpKwwF1b-1

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>LoueStyle – Fashion Rental</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div class="screen active" id="screen-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo-icon">🪝</div>
+      <div class="logo-text">LoueStyle</div>
+      <h2 class="auth-title">Welcome Back!</h2>
+      <p class="auth-sub">Log in to your account</p>
+      <div class="msg" id="login-msg"></div>
+      <div class="input-group">
+        <span class="i-icon">✉</span>
+        <input type="email" id="login-email" placeholder="Enter your email"/>
+      </div>
+      <div class="input-group">
+        <span class="i-icon">🔒</span>
+        <input type="password" id="login-password" placeholder="Enter your password"/>
+        <button class="eye-btn" onclick="togglePwd('login-password')">👁</button>
+      </div>
+      <button class="btn-primary" onclick="login()">Log In</button>
+      <button class="btn-outline" onclick="showScreen('screen-register')">Create New Account</button>
+      <span class="forgot-link">Forgot Password?</span>
+      <div style="margin-top:14px;text-align:center;"><span style="font-size:12px;color:var(--text-light);">Admin? </span><span onclick="showScreen('screen-admin-login')" style="font-size:12px;color:var(--taupe-btn);font-weight:600;cursor:pointer;">Sign in as Admin →</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ REGISTER ══════════ -->
+<div class="screen" id="screen-register">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo-icon">🪝</div>
+      <div class="logo-text">LoueStyle</div>
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-sub">Join LoueStyle today</p>
+      <div class="msg" id="register-msg"></div>
+      <div class="input-group">
+        <span class="i-icon">👤</span>
+        <input type="text" id="reg-name" placeholder="Full name"/>
+      </div>
+      <div class="input-group">
+        <span class="i-icon">✉</span>
+        <input type="email" id="reg-email" placeholder="Email address"/>
+      </div>
+      <div class="input-group">
+        <span class="i-icon">📞</span>
+        <input type="tel" id="reg-phone" placeholder="Phone number"/>
+      </div>
+      <div class="input-group">
+        <span class="i-icon">🔒</span>
+        <input type="password" id="reg-password" placeholder="Password (min 6 chars)"/>
+        <button class="eye-btn" onclick="togglePwd('reg-password')">👁</button>
+      </div>
+      <button class="btn-primary" onclick="register()">Create Account</button>
+      <div class="auth-switch">Already have an account? <span onclick="showScreen('screen-login')">Log In</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ADMIN LOGIN ══════════ -->
+<div class="screen" id="screen-admin-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo-icon">🪝</div>
+      <div class="logo-text">LoueStyle</div>
+      <h2 class="auth-title">Admin Portal</h2>
+      <p class="auth-sub">Sign in to manage your store</p>
+      <div style="background:#f0faf2;border:1px solid #b8e6c8;border-radius:8px;padding:9px 12px;font-size:12px;color:#219150;margin-bottom:14px;text-align:left;">
+        <strong>Default admin:</strong> admin@louestyle.com / admin123
+      </div>
+      <div class="msg" id="admin-login-msg"></div>
+      <div class="input-group">
+        <span class="i-icon">✉</span>
+        <input type="email" id="admin-login-email" placeholder="Admin email"/>
+      </div>
+      <div class="input-group">
+        <span class="i-icon">🔒</span>
+        <input type="password" id="admin-login-password" placeholder="Admin password"/>
+        <button class="eye-btn" onclick="togglePwd('admin-login-password')">👁</button>
+      </div>
+      <button class="btn-primary" onclick="adminLogin()">Sign In as Admin</button>
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:14px;">
+        <p style="font-size:12px;color:var(--text-light);text-align:center;margin-bottom:10px;">First time? Create an admin account</p>
+        <div class="msg" id="admin-reg-msg"></div>
+        <div class="input-group" id="admin-reg-fields" style="display:none;">
+          <span class="i-icon">👤</span>
+          <input type="text" id="admin-reg-name" placeholder="Your name"/>
+        </div>
+        <div class="input-group" id="admin-reg-email-field" style="display:none;">
+          <span class="i-icon">✉</span>
+          <input type="email" id="admin-reg-email" placeholder="Admin email"/>
+        </div>
+        <div class="input-group" id="admin-reg-pwd-field" style="display:none;">
+          <span class="i-icon">🔒</span>
+          <input type="password" id="admin-reg-password" placeholder="Password (min 6 chars)"/>
+        </div>
+        <button id="admin-reg-toggle-btn" class="btn-outline" style="margin-top:0;" onclick="toggleAdminRegForm()">Create Admin Account</button>
+        <button id="admin-reg-submit-btn" class="btn-primary" style="display:none;margin-top:8px;" onclick="registerAdmin()">Submit Registration</button>
+      </div>
+      <div style="margin-top:10px;text-align:center;"><span onclick="showScreen('screen-login')" style="font-size:12px;color:var(--taupe-btn);font-weight:600;cursor:pointer;">← Back to Customer Login</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ HOME ══════════ -->
+<div class="screen" id="screen-home">
+  <div class="topbar">
+    <button class="icon-btn" onclick="openDrawer()" style="font-size:20px;color:var(--text-body);" aria-label="Menu">☰</button>
+    <div class="logo-text">LoueStyle</div>
+    <button class="icon-btn" onclick="navTo('wishlist')">
+      🛍<span class="badge" id="wish-count">0</span>
+    </button>
+  </div>
+  <div class="main-content">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search" id="search-input" oninput="filterProducts()"/>
+    </div>
+    <div class="category-bar" id="category-bar"></div>
+    <div class="hero-banner">
+      <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80" alt="Fashion Collection"/>
+      <div class="hero-overlay">
+        <h2>Browse Collections</h2>
+        <p>Rent your perfect look today</p>
+      </div>
+    </div>
+    <div class="section-title">Featured Items</div>
+    <div class="product-grid" id="product-grid"></div>
+    <div style="height:8px;"></div>
+  </div>
+  <nav class="bottom-nav" id="nav-home">
+    <button class="nav-item active" onclick="navTo('home')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home
+    </button>
+    <button class="nav-item" onclick="navTo('wishlist')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist
+    </button>
+    <button class="nav-item" onclick="navTo('orders')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders
+    </button>
+    <button class="nav-item" onclick="navTo('profile')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile
+    </button>
+  </nav>
+</div>
+
+<!-- ══════════ ITEM DETAIL ══════════ -->
+<div class="screen" id="screen-detail">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <span style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-h);">Item Details</span>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content" style="padding-bottom:100px;">
+    <img id="detail-img" class="detail-img" src="" alt=""/>
+    <div class="detail-content">
+      <h1 class="detail-name" id="detail-name"></h1>
+      <p class="detail-cat"  id="detail-cat"></p>
+      <p class="detail-price" id="detail-price"></p>
+      <p class="detail-desc"  id="detail-desc"></p>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button class="btn-outline" style="width:auto;padding:12px 18px;margin:0;" onclick="toggleWishFromDetail()" id="detail-wish-btn">♡ Save</button>
+        <button class="btn-rent-lg" style="flex:1;" onclick="openRentModal()">Rent Now</button>
+      </div>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ WISHLIST ══════════ -->
+<div class="screen" id="screen-wishlist">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <div class="logo-text">LoueStyle</div>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content">
+    <div style="padding:16px 14px 4px;">
+      <h2 style="font-family:var(--font-serif);font-size:20px;font-weight:600;color:var(--taupe-btn);">Wishlist</h2>
+    </div>
+    <div class="wishlist-grid" id="wishlist-grid"></div>
+    <div class="empty-state" id="wishlist-empty" style="display:none;">
+      <div class="empty-icon">🤍</div>
+      <p>Your wishlist is empty.<br>Browse and save items you love!</p>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ ORDERS ══════════ -->
+<div class="screen" id="screen-orders">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <div class="logo-text">LoueStyle</div>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content">
+    <div style="padding:16px 14px 0;">
+      <h2 style="font-family:var(--font-serif);font-size:20px;font-weight:600;color:var(--text-h);">Orders</h2>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="filterOrders('all',this)">All</button>
+      <button class="tab-btn" onclick="filterOrders('active',this)">Active</button>
+      <button class="tab-btn" onclick="filterOrders('past',this)">Past</button>
+    </div>
+    <div class="orders-list" id="orders-list"></div>
+    <div class="empty-state" id="orders-empty" style="display:none;">
+      <div class="empty-icon">📦</div>
+      <p>No orders yet.<br>Start renting your first piece!</p>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ TRACKING ══════════ -->
+<div class="screen" id="screen-tracking">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <span style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-h);">Track Delivery</span>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content" style="padding-bottom:20px;">
+    <div class="tracking-header" id="tracking-header">
+      <div class="tracking-order-id" id="tracking-order-id"></div>
+      <div class="tracking-product"  id="tracking-product"></div>
+      <div class="tracking-dates"    id="tracking-dates"></div>
+    </div>
+    <div style="height:12px;"></div>
+    <div class="tracking-estimated" id="tracking-estimated">
+      <div class="est-label">Estimated Delivery</div>
+      <div class="est-date" id="tracking-est-date">—</div>
+    </div>
+    <div class="tracking-timeline" id="tracking-timeline"></div>
+    <div style="padding:0 16px 12px;">
+      <div style="background:var(--surface);border-radius:12px;padding:14px 16px;border:1px solid var(--border);">
+        <div style="font-size:11.5px;color:var(--text-light);font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">Delivery Address</div>
+        <div style="font-size:14px;color:var(--text-body);" id="tracking-address"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PROFILE ══════════ -->
+<div class="screen" id="screen-profile">
+  <div class="topbar">
+    <div style="width:36px;"></div>
+    <div class="logo-text">LoueStyle</div>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content">
+    <div class="profile-hero">
+      <div class="avatar" id="profile-avatar">👤</div>
+      <div class="profile-name"  id="profile-name">—</div>
+      <div class="profile-email" id="profile-email">—</div>
+    </div>
+    <div class="profile-list">
+      <div class="profile-item" onclick="navTo('orders')">
+        <div class="profile-item-left">📦 <span>My Orders</span></div><span class="arrow">›</span>
+      </div>
+      <div class="profile-item" onclick="navTo('wishlist')">
+        <div class="profile-item-left">🤍 <span>Wishlist</span></div><span class="arrow">›</span>
+      </div>
+      <div class="profile-item" onclick="openMeasurements()">
+        <div class="profile-item-left">📐 <span>Style Advisor</span></div><span class="arrow">›</span>
+      </div>
+      <div class="profile-item" onclick="navTo('addresses')">
+        <div class="profile-item-left">📍 <span>Saved Addresses</span></div><span class="arrow">›</span>
+      </div>
+      <div class="profile-item" onclick="navTo('payments')">
+        <div class="profile-item-left">💳 <span>Payment Methods</span></div><span class="arrow">›</span>
+      </div>
+      <div class="profile-item" onclick="navTo('notifications')">
+        <div class="profile-item-left">🔔 <span>Notifications</span></div><span class="arrow">›</span>
+      </div>
+      <div class="profile-item" onclick="navTo('support')">
+        <div class="profile-item-left">ℹ️ <span>Help & Support</span></div><span class="arrow">›</span>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ SIDE DRAWER ══════════ -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="side-drawer" id="side-drawer">
+  <div class="drawer-header">
+    <div>
+      <div class="logo-text" style="font-size:20px;">LoueStyle</div>
+      <div id="drawer-user-name" style="font-size:13px;color:rgba(255,255,255,.7);margin-top:2px;">Welcome!</div>
+    </div>
+    <button onclick="closeDrawer()" style="background:none;border:none;color:rgba(255,255,255,.8);font-size:22px;cursor:pointer;line-height:1;">×</button>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-item" onclick="closeDrawer();navTo('home')">
+      <span class="drawer-icon">🏠</span><span>Home</span>
+    </div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('orders')">
+      <span class="drawer-icon">📦</span><span>My Orders</span>
+    </div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('wishlist')">
+      <span class="drawer-icon">🤍</span><span>Wishlist</span>
+    </div>
+    <div class="drawer-item" onclick="closeDrawer();openMeasurements()">
+      <span class="drawer-icon">📐</span><span>Style Advisor</span>
+    </div>
+    <div class="drawer-divider"></div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('profile')">
+      <span class="drawer-icon">👤</span><span>Profile</span>
+    </div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('addresses')">
+      <span class="drawer-icon">📍</span><span>Saved Addresses</span>
+    </div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('payments')">
+      <span class="drawer-icon">💳</span><span>Payment Methods</span>
+    </div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('notifications')">
+      <span class="drawer-icon">🔔</span><span>Notifications</span>
+    </div>
+    <div class="drawer-divider"></div>
+    <div class="drawer-item" onclick="closeDrawer();navTo('support')">
+      <span class="drawer-icon">ℹ️</span><span>Help & Support</span>
+    </div>
+    <div class="drawer-item drawer-logout" onclick="closeDrawer();logout()">
+      <span class="drawer-icon">🚪</span><span>Log Out</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SAVED ADDRESSES ══════════ -->
+<div class="screen" id="screen-addresses">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <span style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-h);">Saved Addresses</span>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content" style="padding:16px;">
+    <div id="addresses-list"></div>
+    <div style="margin-top:12px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text-h);margin-bottom:12px;">Add New Address</div>
+      <div class="form-row"><label>Label (e.g. Home, Work)</label><input type="text" id="addr-label" placeholder="Home"/></div>
+      <div class="form-row"><label>Full Address</label><input type="text" id="addr-line" placeholder="123, Street, City, PIN"/></div>
+      <div class="form-row"><label>City</label><input type="text" id="addr-city" placeholder="City"/></div>
+      <div class="form-row"><label>Pincode</label><input type="text" id="addr-pin" placeholder="400001"/></div>
+      <button class="btn-primary" onclick="saveAddress()">Save Address</button>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item active" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ PAYMENT METHODS ══════════ -->
+<div class="screen" id="screen-payments">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <span style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-h);">Payment Methods</span>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content" style="padding:16px;">
+    <div id="payments-list"></div>
+    <div style="margin-top:12px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text-h);margin-bottom:12px;">Add Payment Method</div>
+      <div class="form-row">
+        <label>Type</label>
+        <select id="pay-type">
+          <option value="UPI">UPI</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="Debit Card">Debit Card</option>
+          <option value="Net Banking">Net Banking</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Account / UPI ID / Last 4 digits</label><input type="text" id="pay-detail" placeholder="e.g. name@upi or 4242"/></div>
+      <div class="form-row"><label>Nickname (optional)</label><input type="text" id="pay-nick" placeholder="e.g. My HDFC Card"/></div>
+      <button class="btn-primary" onclick="savePayment()">Save Payment Method</button>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item active" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ NOTIFICATIONS ══════════ -->
+<div class="screen" id="screen-notifications">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <span style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-h);">Notifications</span>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content" style="padding:16px;">
+    <div style="margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:600;color:var(--text-h);margin-bottom:10px;">Notification Preferences</div>
+      <div id="notif-prefs-list"></div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:16px;">
+      <div style="font-size:13px;font-weight:600;color:var(--text-h);margin-bottom:10px;">Recent Notifications</div>
+      <div id="notif-list"></div>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item active" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ HELP & SUPPORT ══════════ -->
+<div class="screen" id="screen-support">
+  <div class="topbar">
+    <button class="icon-btn" onclick="goBack()" style="font-size:22px;">←</button>
+    <span style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-h);">Help & Support</span>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="main-content" style="padding:16px;">
+    <div style="background:var(--surface);border-radius:14px;padding:16px;border:1px solid var(--border);margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text-h);margin-bottom:12px;">Frequently Asked Questions</div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How does renting work? <span>+</span></div>
+        <div class="faq-a" style="display:none;">Browse items, choose your rental dates, pay online and we deliver to your door. Return the item at the end of your rental period.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What if the item doesn't fit? <span>+</span></div>
+        <div class="faq-a" style="display:none;">Use our Style Advisor to find the right size before ordering. If there's still a fit issue, contact us within 24 hours of delivery.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How do I return items? <span>+</span></div>
+        <div class="faq-a" style="display:none;">Our delivery partner will pick up the item on your end date. Make sure the item is packed and ready before 10 AM on the return day.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is there a security deposit? <span>+</span></div>
+        <div class="faq-a" style="display:none;">A refundable security deposit is collected at the time of delivery and returned after the item is received back in good condition.</div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border-radius:14px;padding:16px;border:1px solid var(--border);">
+      <div style="font-size:14px;font-weight:600;color:var(--text-h);margin-bottom:10px;">Contact Us</div>
+      <div style="font-size:13px;color:var(--text-body);line-height:1.8;">
+        📧 support@louestyle.com<br>
+        📞 +91 98765 43210<br>
+        🕐 Mon–Sat, 10 AM – 7 PM
+      </div>
+      <div style="margin-top:12px;">
+        <div class="form-row"><label>Your message</label><textarea id="support-msg" class="admin-input" placeholder="Describe your issue…" style="height:80px;resize:none;"></textarea></div>
+        <button class="btn-primary" onclick="sendSupportMsg()">Send Message</button>
+      </div>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('wishlist')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Wishlist</button>
+    <button class="nav-item" onclick="navTo('orders')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Orders</button>
+    <button class="nav-item active" onclick="navTo('profile')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Profile</button>
+  </nav>
+</div>
+
+<!-- ══════════ ADMIN PANEL ══════════ -->
+<div class="screen" id="screen-admin">
+  <div class="admin-topbar">
+    <div style="display:flex;align-items:center;">
+      <div class="logo-text">LoueStyle</div>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+    <button onclick="logout()" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:13px;cursor:pointer;">Log out</button>
+  </div>
+  <div class="admin-nav">
+    <button class="admin-tab active" onclick="adminTab('dashboard',this)">Dashboard</button>
+    <button class="admin-tab" onclick="adminTab('orders',this)">Orders</button>
+    <button class="admin-tab" onclick="adminTab('users',this)">Users</button>
+    <button class="admin-tab" onclick="adminTab('products',this)">Products</button>
+    <button class="admin-tab" onclick="adminTab('delivery',this)">Delivery</button>
+  </div>
+  <div class="admin-scroll">
+    <div class="admin-content" id="admin-content"></div>
+  </div>
+</div>
+
+<!-- ══════════ MEASUREMENTS / STYLE ADVISOR MODAL ══════════ -->
+<div class="modal-overlay" id="measurements-modal" onclick="closeMeasurementsOutside(event)">
+  <div class="modal-sheet" style="max-height:90vh;overflow-y:auto;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeMeasurements()">×</button>
+    <h3 class="modal-title">📐 Style Advisor</h3>
+    <p style="font-size:13px;color:var(--text-light);margin:-8px 0 16px;">Tell us your measurements and we'll recommend designs that'll fit you perfectly.</p>
+
+    <div id="measure-step-1">
+      <div class="form-row">
+        <label>Gender</label>
+        <select id="m-gender">
+          <option value="Women">Women</option>
+          <option value="Men">Men</option>
+          <option value="Kids">Kids</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Height (cm)</label>
+        <input type="number" id="m-height" placeholder="e.g. 165" min="100" max="220"/>
+      </div>
+      <div class="form-row">
+        <label>Chest / Bust (cm)</label>
+        <input type="number" id="m-chest" placeholder="e.g. 88" min="60" max="160"/>
+      </div>
+      <div class="form-row">
+        <label>Waist (cm)</label>
+        <input type="number" id="m-waist" placeholder="e.g. 72" min="50" max="140"/>
+      </div>
+      <div class="form-row">
+        <label>Hips (cm)</label>
+        <input type="number" id="m-hips" placeholder="e.g. 96" min="60" max="160"/>
+      </div>
+      <div class="form-row">
+        <label>Occasion (optional)</label>
+        <select id="m-occasion">
+          <option value="">Any</option>
+          <option value="Wedding">Wedding / Formal</option>
+          <option value="Party">Party</option>
+          <option value="Casual">Casual / Daily</option>
+          <option value="Office">Office / Work</option>
+          <option value="Outdoor">Outdoor</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="getStyleRecommendations()">Get My Recommendations ✨</button>
+    </div>
+
+    <div id="measure-step-2" style="display:none;">
+      <div id="style-recommendations"></div>
+      <button class="btn-outline" style="margin-top:12px;" onclick="resetMeasurements()">← Try Different Measurements</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ RENT MODAL ══════════ -->
+<div class="modal-overlay" id="rent-modal" onclick="closeModalOutside(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeRentModal()">×</button>
+    <h3 class="modal-title">Place Rental Order</h3>
+    <div class="modal-item-row">
+      <img id="modal-img" src="" alt=""/>
+      <div>
+        <div class="modal-item-name"  id="modal-name"></div>
+        <div class="modal-item-price" id="modal-ppd"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Start Date</label>
+      <input type="date" id="rent-start" onchange="calcCost()"/>
+    </div>
+    <div class="form-row">
+      <label>End Date</label>
+      <input type="date" id="rent-end" onchange="calcCost()"/>
+    </div>
+    <div class="form-row">
+      <label>Delivery Address</label>
+      <input type="text" id="rent-address" placeholder="e.g. 1234 Elm Street, Springfield"/>
+    </div>
+    <div class="form-row">
+      <label>Payment Method</label>
+      <select id="rent-payment">
+        <option>Credit Card</option><option>Debit Card</option>
+        <option>UPI</option><option>Net Banking</option><option>Cash on Delivery</option>
+      </select>
+    </div>
+    <div class="cost-summary" id="cost-summary" style="display:none;">
+      <div class="cost-row"><span>Rental Duration</span><span id="rent-days">—</span></div>
+      <div class="cost-row"><span>Price per day</span><span id="rent-ppd-val">—</span></div>
+      <div class="cost-row total"><span>Total Cost</span><span id="rent-total">—</span></div>
+    </div>
+    <button class="btn-primary" onclick="confirmOrder()">Confirm Order</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
